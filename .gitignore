@@ -116,6 +116,3 @@ docs/_build/
 demos/form/uploads/*
 !demos/form/uploads/.gitkeep
 
-# Pipfile
-Pipfile
-Pipfile.lock
