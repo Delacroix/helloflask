@@ -23,16 +23,25 @@ app.secret_key = os.getenv('SECRET_KEY', 'secret string')
 @app.route('/')
 @app.route('/hello')
 def hello():
+    # name = request.args.get('name')
+    # if name is None:
+    #     name = request.cookies.get('name', 'Human')
+    # response = '<h1>Hello, %s!</h1>' % escape(name)  # escape name to avoid XSS
+    # # return different response according to the user's authentication status
+    # if 'logged_in' in session:
+    #     response += '[Authenticated]'
+    # else:
+    #     response += '[Not Authenticated]'
+    # return response
     name = request.args.get('name')
     if name is None:
         name = request.cookies.get('name', 'Human')
-    response = '<h1>Hello, %s!</h1>' % escape(name)  # escape name to avoid XSS
-    # return different response according to the user's authentication status
-    if 'logged_in' in session:
-        response += '[Authenticated]'
-    else:
-        response += '[Not Authenticated]'
-    return response
+        response = '<h1>Hello, %s</h1>' % name
+        if 'logged_in' in session:
+            response += '[Authenticated]'
+        else:
+            response += '[Not Authenticated]'
+        return response
 
 
 # redirect
@@ -136,13 +145,17 @@ def set_cookie(name):
 # log in user
 @app.route('/login')
 def login():
+    # session['logged_in'] = True
+    # return redirect(url_for('hello'))
     session['logged_in'] = True
     return redirect(url_for('hello'))
-
 
 # protect view
 @app.route('/admin')
 def admin():
+    # if 'logged_in' not in session:
+    #     abort(403)
+    # return 'Welcome to admin page.'
     if 'logged_in' not in session:
         abort(403)
     return 'Welcome to admin page.'
@@ -151,6 +164,9 @@ def admin():
 # log out user
 @app.route('/logout')
 def logout():
+    # if 'logged_in' in session:
+    #     session.pop('logged_in')
+    # return redirect(url_for('hello'))
     if 'logged_in' in session:
         session.pop('logged_in')
     return redirect(url_for('hello'))
@@ -188,8 +204,17 @@ def load_post():
 # redirect to last page
 @app.route('/foo')
 def foo():
-    return '<h1>Foo page</h1><a href="%s">Do something and redirect</a>' \
-           % url_for('do_something', next=request.full_path)
+    # case 1
+    # return '<h1>Foo page</h1><a href="%s">Do something and redirect</a>' \
+        #    % url_for('do_something', next=request.full_path)
+    # case 2
+    # response = make_response('Hello, World!')
+    # response.mimetype = 'text/plain'
+    # return response
+    # case 3
+    # return jsonify(name='DX', gender='male')
+    # case 4
+    return jsonify(message='Error!'), 500
 
 
 @app.route('/bar')
