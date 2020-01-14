@@ -116,3 +116,5 @@ docs/_build/
 demos/form/uploads/*
 !demos/form/uploads/.gitkeep
 
+# vscode
+.vscode

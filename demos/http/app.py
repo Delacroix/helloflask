@@ -219,19 +219,20 @@ def foo():
     # return jsonify(name='DX', gender='male')
     # case 4
     # return jsonify(message='Error!'), 500
-    return '<h1>Foo page</h1><a href="%s">Do something</a>' % url_for('do_')
+    return '<h1>Foo page</h1><a href="%s">Do something</a>' % url_for('do_something')
 
 
 @app.route('/bar')
 def bar():
-    return '<h1>Bar page</h1><a href="%s">Do something and redirect</a>' \
-           % url_for('do_something', next=request.full_path)
-
+    # return '<h1>Bar page</h1><a href="%s">Do something and redirect</a>' \
+    #        % url_for('do_something', next=request.full_path)
+    return '<h1>Bar page</h1><a href="%s">Do something</a>' % url_for ('do_something')
 
 @app.route('/do-something')
 def do_something():
     # do something here
-    return redirect_back()
+    # return redirect_back()
+    return redirect(url_for('hello'))
 
 
 def is_safe_url(target):
