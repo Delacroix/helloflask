@@ -13,11 +13,15 @@ except ImportError:
 
 from jinja2 import escape
 from jinja2.utils import generate_lorem_ipsum
-from flask import Flask, make_response, request, redirect, url_for, abort, session, jsonify
+from flask import Flask, make_response, request, redirect, url_for, abort, session, jsonify, g
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'secret string')
 
+
+@app.before_request
+def get_name():
+    g.name = request.args.get('name')
 
 # get name value from query string and cookie
 @app.route('/')
@@ -214,7 +218,8 @@ def foo():
     # case 3
     # return jsonify(name='DX', gender='male')
     # case 4
-    return jsonify(message='Error!'), 500
+    # return jsonify(message='Error!'), 500
+    return '<h1>Foo page</h1><a href="%s">Do something</a>' % url_for('do_')
 
 
 @app.route('/bar')
