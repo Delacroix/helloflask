@@ -219,31 +219,57 @@ def foo():
     # return jsonify(name='DX', gender='male')
     # case 4
     # return jsonify(message='Error!'), 500
-    return '<h1>Foo page</h1><a href="%s">Do something</a>' % url_for('do_something')
-
+    # return '<h1>Foo page</h1><a href="%s">Do something</a>' % url_for('do_something')
+    # case5
+    return '<h1>Foo page</h1><a href="%s">Do something and redirect</a>' % url_for('do_something', next=request.full_path)
+    
 
 @app.route('/bar')
 def bar():
     # return '<h1>Bar page</h1><a href="%s">Do something and redirect</a>' \
     #        % url_for('do_something', next=request.full_path)
-    return '<h1>Bar page</h1><a href="%s">Do something</a>' % url_for ('do_something')
+    # return '<h1>Bar page</h1><a href="%s">Do something</a>' % url_for ('do_something')
+    # case5
+    return '<h1>Foo page</h1><a href="%s">Do something and redirect</a>' % url_for('do_something', next=request.full_path)
+    
 
-@app.route('/do-something')
+# @app.route('/do-something')
+@app.route('/do_something_and_redirect')
 def do_something():
     # do something here
+    # case1
     # return redirect_back()
-    return redirect(url_for('hello'))
+    # case2
+    # return redirect(url_for('hello'))
+    # case3
+    # return redirect(request.referrer or url_for('hello'))
+    # case4
+    return redirect_back()
 
 
+
+# def is_safe_url(target):
+#     ref_url = urlparse(request.host_url)
+#     test_url = urlparse(urljoin(request.host_url, target))
+#     return test_url.scheme in ('http', 'https') and \
+#            ref_url.netloc == test_url.netloc
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
     test_url = urlparse(urljoin(request.host_url, target))
-    return test_url.scheme in ('http', 'https') and \
-           ref_url.netloc == test_url.netloc
+    return test_url.scheme in ('http', 'https') and ref_url.netloc == test_url.netloc
 
 
+# def redirect_back(default='hello', **kwargs):
+#     for target in request.args.get('next'), request.referrer:
+#         if not target:
+#             continue
+#         if is_safe_url(target):
+#             return redirect(target)
+#     return redirect(url_for(default, **kwargs))
 def redirect_back(default='hello', **kwargs):
     for target in request.args.get('next'), request.referrer:
+        # if target:
+        #     return redirect(target)
         if not target:
             continue
         if is_safe_url(target):
