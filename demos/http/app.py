@@ -125,7 +125,7 @@ body: Don't forget the party!
         body = {"note": {
             "to": "Peter",
             "from": "Jane",
-            "heading": "Remider",
+            "heading": "Reminder",
             "body": "Don't forget the party!"
         }
         }
