@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "/home/dx/.local/share/virtualenvs/helloflask-4aGMwd-P/bin/python"
+    "python.pythonPath": "/home/dx/.local/share/virtualenvs/helloflask-4aGMwd-P/bin/python",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }
