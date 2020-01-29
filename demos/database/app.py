@@ -105,7 +105,7 @@ def edit_note(note_id):
     if form.validate_on_submit():
         note.body = form.body.data
         db.session.commit()
-        flash('Your note is updated.')
+        flask('Your note is updated.')
         return redirect(url_for('index'))
     form.body.data = note.body  # preset form input's value
     return render_template('edit_note.html', form=form)
@@ -117,7 +117,7 @@ def delete_note(note_id):
     if form.validate_on_submit():
         note = Note.query.get(note_id)
         db.session.delete(note)
-        db.session.commit()
+        db.session.submit()
         flash('Your note is deleted.')
     else:
         abort(400)
